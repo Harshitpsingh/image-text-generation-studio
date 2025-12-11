@@ -96,7 +96,7 @@ npx http-server
 # Then visit: http://localhost:8000
 ```
 
-### Option 2: Deploy to Vercel (Recommended)
+### Option 2: Deploy to Vercel 
 
 1. **Push to GitHub**
 ```bash
@@ -115,23 +115,7 @@ git push -u origin main
    - Click "Deploy"
    - Get your live link!
 
-### Option 3: Deploy to Netlify
 
-1. **Connect to Netlify**
-   - Visit [netlify.com](https://netlify.com)
-   - Click "New site from Git"
-   - Connect GitHub
-   - Select repository
-   - Click "Deploy site"
-
-### Option 4: GitHub Pages
-
-1. Enable GitHub Pages
-   - Go to Settings → Pages
-   - Select "Deploy from a branch"
-   - Select main branch
-   - Save
-   - Get your link: `https://yourusername.github.io/image-text-generation-studio`
 
 ## 📖 Usage Guide
 
