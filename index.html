@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image & Text Generation Studio</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎨 Image & Text Generation Studio</h1>
+            <p>Transform your text into stunning images with AI-powered enhancements</p>
+        </header>
+
+        <!-- API Selection Section -->
+        <div class="api-selection">
+            <h3>⚙️ Select Image Generation API</h3>
+            <p style="margin-bottom: 20px; color: var(--color-text-light);">Choose your preferred API provider. Pollinations AI is free and doesn't require an API key.</p>
+            
+            <div class="api-grid">
+                <!-- Pollinations AI -->
+                <div class="api-card active" onclick="selectAPI('pollinations')">
+                    <h4>🐝 Pollinations AI</h4>
+                    <p>Free image generation, no API key required</p>
+                    <div class="api-status free">✓ FREE - No Key</div>
+                </div>
+
+                <!-- Replicate -->
+                <div class="api-card" onclick="selectAPI('replicate')">
+                    <h4>🔄 Replicate</h4>
+                    <p>Premium models with free credits</p>
+                    <div class="api-key-input" id="replicate-input">
+                        <label>API Key (from replicate.com)</label>
+                        <input type="password" id="replicate-key" placeholder="Paste your Replicate API key here">
+                    </div>
+                    <div class="api-status paid">Requires API Key</div>
+                </div>
+
+                <!-- Stability AI -->
+                <div class="api-card" onclick="selectAPI('stability')">
+                    <h4>🎯 Stability AI</h4>
+                    <p>High-quality image generation</p>
+                    <div class="api-key-input" id="stability-input">
+                        <label>API Key (from platform.stability.ai)</label>
+                        <input type="password" id="stability-key" placeholder="Paste your Stability AI API key here">
+                    </div>
+                    <div class="api-status paid">Requires API Key</div>
+                </div>
+
+                <!-- OpenAI DALL-E -->
+                <div class="api-card" onclick="selectAPI('openai')">
+                    <h4>🤖 OpenAI DALL-E</h4>
+                    <p>Premium image generation with GPT-4</p>
+                    <div class="api-key-input" id="openai-input">
+                        <label>API Key (from openai.com)</label>
+                        <input type="password" id="openai-key" placeholder="Paste your OpenAI API key here">
+                    </div>
+                    <div class="api-status paid">Requires API Key</div>
+                </div>
+
+                <!-- Hugging Face BLIP -->
+                <div class="api-card active" onclick="selectAPI('huggingface')">
+                    <h4>🧠 Hugging Face BLIP</h4>
+                    <p>Free image analysis (No API key needed!)</p>
+                    <div class="api-status free">✓ FREE - No Key Required</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-grid">
+            <!-- Text to Image Workflow Card -->
+            <div class="card">
+                <h2><span class="card-icon">📝</span> Text to Image</h2>
+                
+                <div class="form-group">
+                    <label for="textInput">Enter Your Text Prompt:</label>
+                    <textarea id="textInput" placeholder="Describe what you want to generate..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="imageStyle">Image Style:</label>
+                    <select id="imageStyle">
+                        <option value="realistic">Realistic</option>
+                        <option value="illustration">Illustration</option>
+                        <option value="oil painting">Oil Painting</option>
+                        <option value="digital art">Digital Art</option>
+                        <option value="photorealistic">Photorealistic</option>
+                        <option value="cyberpunk">Cyberpunk</option>
+                        <option value="fantasy">Fantasy</option>
+                    </select>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn-primary" onclick="enhanceAndGenerateText()" id="textBtn">Enhance & Generate</button>
+                    <button class="btn-secondary" onclick="clearTextForm()">Clear</button>
+                </div>
+
+                <div class="loading" id="textLoading">
+                    <div class="spinner"></div>
+                    <p>Generating your image...</p>
+                </div>
+            </div>
+
+            <!-- Image Variations Workflow Card -->
+            <div class="card">
+                <h2><span class="card-icon">🖼️</span> Image Variations</h2>
+                
+                <div class="form-group">
+                    <label for="imageInput">Upload or Provide Image URL:</label>
+                    <input type="text" id="imageUrlInput" placeholder="Or paste image URL here...">
+                    <p style="font-size: 0.85em; color: var(--color-text-light); margin-top: 5px; margin-bottom: 5px;">or</p>
+                    <input type="file" id="imageInput" accept="image/*" onchange="handleImageUpload(event)">
+                </div>
+
+                <div class="button-group">
+                    <button class="btn-primary" onclick="analyzeAndGenerateVariations()" id="variationBtn">Analyze & Generate Variations</button>
+                    <button class="btn-secondary" onclick="clearImageForm()">Clear</button>
+                </div>
+
+                <div class="loading" id="variationLoading">
+                    <div class="spinner"></div>
+                    <p>Generating image variations...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="resultsSection" style="display: none;">
+            <h3>📊 Results & Generated Content</h3>
+
+            <!-- Text to Image Results -->
+            <div id="textResults" style="display: none;">
+                <h4>Enhanced Prompt</h4>
+                <div class="enhanced-text">
+                    <p id="enhancedTextOutput"></p>
+                    <button class="copy-btn" onclick="copyToClipboard('enhancedTextOutput')">Copy</button>
+                </div>
+            </div>
+
+            <!-- Generated Image -->
+            <div id="generatedImages" style="display: none; margin-top: 30px;">
+                <h4>Generated Image</h4>
+                <div class="image-gallery" id="imageGallery"></div>
+            </div>
+
+            <!-- Image Analysis Results -->
+            <div id="imageAnalysisResults" style="display: none; margin-top: 30px;">
+                <h4>Image Analysis</h4>
+                <div class="enhanced-text">
+                    <p id="imageAnalysisOutput"></p>
+                </div>
+            </div>
+
+            <!-- Image Variations -->
+            <div id="imageVariations" style="display: none; margin-top: 30px;">
+                <h4>Image Variations (4 Variations)</h4>
+                <div class="image-gallery" id="variationGallery"></div>
+            </div>
+        </div>
+
+        <!-- Message Container -->
+        <div id="messageContainer"></div>
+
+        <div class="footer">
+            <p>🚀 Powered by AI | Text Enhancement & Image Generation Studio | © 2025</p>
+        </div>
+    </div>
+
+    <!-- Load scripts in correct order -->
+    <script src="js/api-config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/image-handler.js"></script>
+    <script src="js/api-client.js"></script>
+    <script src="js/analysis.js"></script>
+    <script src="js/ui-controller.js"></script>
+</body>
+</html>

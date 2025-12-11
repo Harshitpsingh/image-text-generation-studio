@@ -1,0 +1,31 @@
+{
+  "name": "image-text-generation-studio",
+  "version": "1.0.0",
+  "description": "AI-powered image generation and variation tool using free APIs",
+  "main": "index.html",
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/image-text-generation-studio.git"
+  },
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8000"
+  },
+  "keywords": [
+    "ai",
+    "image-generation",
+    "text-to-image",
+    "pollinations",
+    "huggingface",
+    "blip",
+    "web-app",
+    "javascript",
+    "generative-ai",
+    "machine-learning"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
