@@ -37,7 +37,7 @@
 
 ## 🚀 Live Demo
 
-**[View Live Project](https://your-vercel-link.vercel.app)** 
+**[View Live Project](https://image-text-generation-studio.vercel.app/)** 
 
 ## 📋 Requirements
 
